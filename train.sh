@@ -1,4 +1,4 @@
-python /home/firqaaa/Python/VLM/vsft_llava.py \
+python /home/firqaaa/Python/VLM/train_vsft.py \
     --dataset_name="HuggingFaceH4/llava-instruct-mix-vsft" \
     --model_name_or_path="llava-hf/llava-1.5-7b-hf" \
     --report_to="wandb" \
@@ -18,7 +18,7 @@ python /home/firqaaa/Python/VLM/vsft_llava.py \
     --lora_alpha=16 \
     --lora_target_modules="all-linear"
 
-# python /home/firqaaa/Python/VLM/vsft_llava.py \
+# python /home/firqaaa/Python/VLM/train_vsft.py \
 #     --dataset_name="HuggingFaceH4/llava-instruct-mix-vsft" \
 #     --model_name_or_path="llava-hf/llava-1.5-7b-hf" \
 #     --report_to="wandb" \
