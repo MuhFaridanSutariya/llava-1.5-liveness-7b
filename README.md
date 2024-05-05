@@ -1,1 +1,1 @@
-# Retired-Yann-LeCun-
+# [MODEL NAME] : A Vision Language Model for Liveness Detection
