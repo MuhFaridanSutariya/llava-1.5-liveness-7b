@@ -1,0 +1,7 @@
+pillow
+trl
+peft
+bitsandbytes
+wandb
+transformers
+huggingface_hub[cli]
