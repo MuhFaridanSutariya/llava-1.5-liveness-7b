@@ -5,3 +5,4 @@ bitsandbytes
 wandb
 transformers
 huggingface_hub[cli]
+opencv-python
