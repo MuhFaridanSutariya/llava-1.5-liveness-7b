@@ -50,7 +50,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert MP4 videos to JPG images per frame")
     parser.add_argument("--input_folder", type=str, required=True, help="Path to the folder containing video files")
     parser.add_argument("--output_folder", type=str, required=True, help="Path to the folder where images will be saved")
-    parser.add_argument("--max_frames", type=int, default=250, help="Maximum number of frames to extract per video")
+    parser.add_argument("--max_frames", type=int, default=10, help="Maximum number of frames to extract per video")
     args = parser.parse_args()
 
     input_folder_path = args.input_folder
