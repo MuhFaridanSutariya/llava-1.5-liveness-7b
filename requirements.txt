@@ -6,3 +6,4 @@ wandb
 transformers
 huggingface_hub[cli]
 opencv-python
+datasets
