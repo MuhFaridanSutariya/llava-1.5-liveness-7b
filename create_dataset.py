@@ -7,6 +7,7 @@ from huggingface_hub import login
 from dotenv import load_dotenv
 from datasets import Dataset, Image
 from tqdm.auto import tqdm
+from sklearn.utils import shuffle
 
 def encode_image(image_path):
     with open(image_path, "rb") as file:
@@ -48,7 +49,7 @@ def format_output(prompt, image_url, response):
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Convert MP4 videos to JPG images per frame")
+    parser = argparse.ArgumentParser(description="Generating Liveness Images Dataset with Captions")
     parser.add_argument("--image_folders", nargs='+', required=True, help="List of directories path to process")
 
     # Parse the command-line arguments
@@ -71,7 +72,7 @@ if __name__ == "__main__":
     results = []
 
     prompt = """
-    I ask you to be an liveness image annotator expert to determine if an image "Real" or "Spoof". 
+    I ask you to be a liveness image annotator expert to determine if an image "Real" or "Spoof". 
     If an image is a "Spoof" define what kind of attack, is it spoofing attack that used Print(flat), Replay(monitor, laptop), or Mask(paper, crop-paper, silicone)?
     If an image is a "Real" or "Normal" return "No Attack". 
     Whether if an image is "Real" or "Spoof" give an explanation to this.
@@ -81,6 +82,9 @@ if __name__ == "__main__":
     Attack Type :
     Explanation :
     """
+
+    jpg_files = shuffle(jpg_files, random_state=20241605)
+
     for path in tqdm(jpg_files, total=len(jpg_files)):
         base64_image = encode_image(path)
 
@@ -90,7 +94,7 @@ if __name__ == "__main__":
         }
 
         payload = {
-            "model": "gpt-4-turbo",
+            "model": "gpt-4o",
             "messages": [
                 {
                     "role": "user",
@@ -108,12 +112,15 @@ if __name__ == "__main__":
                     ]
                 }
             ],
-            "max_tokens": 1024
+            "max_tokens": 300
         }
 
         response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
-        assistant_response = response.json()["choices"][0]["message"]["content"]
+        try:
+            assistant_response = response.json()["choices"][0]["message"]["content"]
+        except:
+            assistant_response = ""
 
         output = format_output(prompt, f"data:image/jpeg;base64,{base64_image}", assistant_response)
 
