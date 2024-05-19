@@ -1,4 +1,4 @@
-python /home/firqaaa/Python/VLM/train_vsft.py \
+python ../src/models/train_vsft.py \
     --dataset_name="HuggingFaceH4/llava-instruct-mix-vsft" \
     --model_name_or_path="llava-hf/llava-1.5-7b-hf" \
     --report_to="wandb" \
