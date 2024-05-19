@@ -75,7 +75,6 @@ if __name__ == "__main__":
     ################
     # Create a data collator to encode text and image pairs
     ################
-
     class LLavaDataCollator:
         def __init__(self, processor):
             self.processor = processor
@@ -84,14 +83,18 @@ if __name__ == "__main__":
             texts = []
             images = []
             for example in examples:
-                if len(example["images"]) > 1:
+                image = example["images"]
+                if not isinstance(image, list):
+                    image = [image]
+                if len(image) > 1:
                     raise ValueError("This collator only supports one image per example")
+                
                 messages = example["messages"]
                 text = self.processor.tokenizer.apply_chat_template(
                     messages, tokenize=False, add_generation_prompt=False
                 )
                 texts.append(text)
-                images.append(example["images"][0])
+                images.append(image[0])
             
             batch = self.processor(texts, images, return_tensors="pt", padding=True)
 
