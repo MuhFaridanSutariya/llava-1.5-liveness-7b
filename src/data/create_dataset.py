@@ -96,7 +96,7 @@ if __name__ == "__main__":
     combined_df = shuffle(combined_df, random_state=0)
     combined_df = combined_df.reset_index().drop('index', axis=1)[:20000]
     
-    train_df = combined_df[:15000]
+    train_df = combined_df[10250:15000]
     eval_df = combined_df[15000:17500]
     test_df = combined_df[17500:]
 
@@ -188,14 +188,11 @@ if __name__ == "__main__":
             output = format_output(prompt, f"data:image/jpeg;base64,{base64_image}", assistant_response)
             results.append(output)
 
-
-            # Save a checkpoint every 500 steps
-            if (idx + 1) % 500 == 0 or (idx + 1) == len(image_paths):
-                ds = Dataset.from_dict({"messages": results})
-                ds = ds.add_column("images", image_paths[:len(results)])
-                ds = ds.add_column("labels", labels[:len(results)])
-                ds = ds.cast_column("images", Image())
-                ds.push_to_hub(f"firqaaa/liveness", split=data_split)
+        ds = Dataset.from_dict({"messages": results})
+        ds = ds.add_column("images", image_paths[:len(results)])
+        ds = ds.add_column("labels", labels[:len(results)])
+        ds = ds.cast_column("images", Image())
+        ds.push_to_hub(f"firqaaa/liveness-b4", split=data_split)
     
 
     prompt = """
