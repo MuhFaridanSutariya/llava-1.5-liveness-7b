@@ -9,3 +9,4 @@ opencv-python
 datasets
 accelerate
 flash-attn --no-build-isolation
+streamlit
