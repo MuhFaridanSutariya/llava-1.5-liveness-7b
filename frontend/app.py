@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
 import av
+import cv2
 from peft import PeftModel, PeftConfig
 from transformers import AutoProcessor, LlavaForConditionalGeneration, BitsAndBytesConfig
 import torch
@@ -34,7 +35,9 @@ class VideoProcessor(VideoProcessorBase):
 
     def recv(self, frame):
         self.frame = frame.to_ndarray(format="bgr24")
-        return av.VideoFrame.from_ndarray(self.frame, format="bgr24")
+        # Convert BGR to RGB
+        self.frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
+        return av.VideoFrame.from_ndarray(self.frame, format="rgb24")
 
 st.title("WebRTC Camera Capture")
 st.write("Capture an image from your camera.")
