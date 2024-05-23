@@ -6,6 +6,7 @@ from peft import PeftModel, PeftConfig
 from transformers import AutoProcessor, LlavaForConditionalGeneration, BitsAndBytesConfig
 import torch
 from PIL import Image
+import cv2
 
 # Check device availability
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -34,9 +35,7 @@ class VideoProcessor(VideoProcessorBase):
         self.frame = None
 
     def recv(self, frame):
-        self.frame = frame.to_ndarray(format="bgr24")
-        # Convert BGR to RGB
-        self.frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
+        self.frame = cv2.cvtColor(frame.to_ndarray(format="bgr24"), cv2.COLOR_BGR2RGB)
         return av.VideoFrame.from_ndarray(self.frame, format="rgb24")
 
 st.title("WebRTC Camera Capture")
