@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
 import av
 from peft import PeftModel, PeftConfig
-from transformers import AutoProcessor, LlavaForConditionalGeneration
+from transformers import AutoProcessor, LlavaForConditionalGeneration, BitsAndBytesConfig
 import torch
 from PIL import Image
 
@@ -10,15 +10,21 @@ from PIL import Image
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
+# Configure 8-bit loading
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    load_in_8bit_fp32_cpu_offload=True,
+    device_map="auto",
+    attn_implementation="flash_attention_2"
+)
+
 # Load model configurations
 config = PeftConfig.from_pretrained("firqaaa/vsft-llava-1.5-7b-hf-liveness-trl")
 processor = AutoProcessor.from_pretrained("llava-hf/llava-1.5-7b-hf")
 base_model = LlavaForConditionalGeneration.from_pretrained("llava-hf/llava-1.5-7b-hf",
-                                                               torch_dtype=torch.float16,
-                                                               low_cpu_mem_usage=True,
-                                                               device_map="auto",
-                                                               load_in_4bit=True,
-                                                               attn_implementation="flash_attention_2")
+                                                            torch_dtype=torch.float16,
+                                                            quantization_config=bnb_config)
+
 model = PeftModel.from_pretrained(base_model, "firqaaa/vsft-llava-1.5-7b-hf-liveness-trl")
 model.to(device)
 
