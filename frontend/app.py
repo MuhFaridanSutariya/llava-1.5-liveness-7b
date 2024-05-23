@@ -1,52 +1,64 @@
 import streamlit as st
-import cv2
-import numpy as np
+from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
+import av
+from peft import PeftModel, PeftConfig
+from transformers import AutoProcessor, LlavaForConditionalGeneration
+import torch
 from PIL import Image
 
-# Function to load image
-def load_image(image_file):
-    img = Image.open(image_file)
-    return img
+# Check device availability
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
 
-# Function to detect faces
-def detect_faces(image):
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-    faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-    return faces
+# Load model configurations
+config = PeftConfig.from_pretrained("firqaaa/vsft-llava-1.5-7b-hf-liveness-trl")
+processor = AutoProcessor.from_pretrained("llava-hf/llava-1.5-7b-hf")
+base_model = LlavaForConditionalGeneration.from_pretrained("llava-hf/llava-1.5-7b-hf",
+                                                               torch_dtype=torch.float16,
+                                                               low_cpu_mem_usage=True,
+                                                               device_map="auto",
+                                                               load_in_4bit=True,
+                                                               attn_implementation="flash_attention_2")
+model = PeftModel.from_pretrained(base_model, "firqaaa/vsft-llava-1.5-7b-hf-liveness-trl")
+model.to(device)
 
-# Function to draw rectangles around faces
-def draw_faces(image, faces):
-    for (x, y, w, h) in faces:
-        cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 2)
-    return image
+class VideoProcessor(VideoProcessorBase):
+    def __init__(self):
+        self.frame = None
 
-# Streamlit app
-st.title("Testing upload detect muka messi")
+    def recv(self, frame):
+        self.frame = frame.to_ndarray(format="bgr24")
+        return av.VideoFrame.from_ndarray(self.frame, format="bgr24")
 
-st.write("Upload messi the goat")
+st.title("WebRTC Camera Capture")
+st.write("Capture an image from your camera.")
 
-# File uploader
-image_file = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
+webrtc_ctx = webrtc_streamer(key="example", video_processor_factory=VideoProcessor)
 
-if image_file is not None:
-    # Load image
-    img = load_image(image_file)
-    st.image(img, caption="Uploaded Image", use_column_width=True)
+if webrtc_ctx.video_processor:
+    if st.button("Capture"):
+        img = webrtc_ctx.video_processor.frame
+        if img is not None:
+            st.image(img, caption='Captured Image.', use_column_width=True)
+            
+            image = Image.fromarray(img)
+            prompt = """USER: <image>\nI ask you to be an liveness image annotator expert to determine if an image "Real" or "Spoof". 
+                        If an image is a "Spoof" define what kind of attack, is it spoofing attack that used Print(flat), Replay(monitor, laptop), or Mask(paper, crop-paper, silicone)?
+                        If an image is a "Real" or "Normal" return "No Attack". 
+                        Whether if an image is "Real" or "Spoof" give an explanation to this.
+                        Return your response using following format :
 
-    # Convert PIL image to OpenCV format
-    img_array = np.array(img)
-    image = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
-
-    # Detect faces
-    faces = detect_faces(image)
-    
-    if len(faces) > 0:
-        st.write(f"Found {len(faces)} face(s)")
-        # Draw faces
-        image_with_faces = draw_faces(image, faces)
-        # Convert back to RGB format for displaying in Streamlit
-        image_with_faces = cv2.cvtColor(image_with_faces, cv2.COLOR_BGR2RGB)
-        st.image(image_with_faces, caption="Image with Detected Faces", use_column_width=True)
-    else:
-        st.write("No faces found")
+                        Real/Spoof : 
+                        Attack Type :
+                        Explanation :\nASSISTANT:"""
+            
+            # Prepare inputs and move to device
+            inputs = processor(prompt, images=image, return_tensors="pt").to(device)
+            
+            # Generate output
+            output = model.generate(**inputs, max_new_tokens=300)
+            
+            # Decode and display the output
+            decoded_output = processor.decode(output[0], skip_special_tokens=True).split("ASSISTANT:")[-1].strip()
+            st.write("Inference Result:")
+            st.write(decoded_output)
