@@ -5,6 +5,13 @@ from PIL import Image
 import torch
 from peft import PeftModel, PeftConfig
 from transformers import AutoProcessor, LlavaForConditionalGeneration, BitsAndBytesConfig
+import os
+
+from huggingface_hub import login
+from peft import PeftModel, PeftConfig
+
+login(token=os.environ["HF_TOKEN"])
+
 
 # Check device availability
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -13,9 +20,9 @@ print(f"Using device: {device}")
 # Configure 8-bit loading
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
-    load_in_8bit_fp32_cpu_offload=True,
-    device_map="auto",
-    attn_implementation="flash_attention_2"
+    # load_in_8bit_fp32_cpu_offload=True,
+    # device_map="auto",
+    # attn_implementation="flash_attention_2"
 )
 
 # Load model configurations
@@ -23,15 +30,15 @@ config = PeftConfig.from_pretrained("firqaaa/vsft-llava-1.5-7b-hf-liveness-trl")
 processor = AutoProcessor.from_pretrained("llava-hf/llava-1.5-7b-hf")
 base_model = LlavaForConditionalGeneration.from_pretrained("llava-hf/llava-1.5-7b-hf",
                                                             torch_dtype=torch.float16,
+                                                            low_cpu_mem_usage=True,
                                                             quantization_config=bnb_config)
 
 model = PeftModel.from_pretrained(base_model, "firqaaa/vsft-llava-1.5-7b-hf-liveness-trl")
 model.to(device)
 
 def process_image(image):
-    img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     
-    pil_image = Image.fromarray(img_rgb)
+    pil_image = Image.fromarray(image)
     
     prompt = """USER: <image>\nI ask you to be an liveness image annotator expert to determine if an image "Real" or "Spoof". 
                 If an image is a "Spoof" define what kind of attack, is it spoofing attack that used Print(flat), Replay(monitor, laptop), or Mask(paper, crop-paper, silicone)?
@@ -64,4 +71,4 @@ with gr.Blocks() as demo:
     capture_button.click(fn=capture_and_process_image, inputs=webcam_input, outputs=[captured_image, result_output])
 
 if __name__ == "__main__":
-    demo.launch(share=True)
+    demo.launch(share=True, debug=True)
