@@ -55,7 +55,7 @@ def process_image(image):
     output = model.generate(**inputs, max_new_tokens=300)
     
     decoded_output = processor.decode(output[0], skip_special_tokens=True).split("ASSISTANT:")[-1].strip()
-    return img_rgb, decoded_output
+    return image, decoded_output
 
 def capture_and_process_image(webcam_image):
     captured_img, result = process_image(webcam_image)
