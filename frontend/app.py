@@ -64,4 +64,4 @@ with gr.Blocks() as demo:
     capture_button.click(fn=capture_and_process_image, inputs=webcam_input, outputs=[captured_image, result_output])
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(share=True)
