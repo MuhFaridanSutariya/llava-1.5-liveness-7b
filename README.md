@@ -1,7 +1,7 @@
 # Llava-1.5-Liveness-7b : A Vision Language Model for Liveness Detection
 
-- Team Leader: <b>Firqa Aqila Noor Arasyi</b>
-- Team Member: <b>Muhammad Hasnan Ramadhan, Muhammad Faridan Sutariya and Rasyidan Akbar Fayrussani</b>
+- Team Leader: <b>[Firqa Aqila Noor Arasyi](https://github.com/firqaaa)</b>
+- Team Member: <b>[Muhammad Hasnan Ramadhan](https://github.com/hasnanmr), [Muhammad Faridan Sutariya](https://github.com/MuhFaridanSutariya) and [Rasyidan Akbar Fayrussani](https://github.com/0xrsydn)</b>
 
 ## How to run
 
@@ -71,6 +71,6 @@ This command will install all the required packages specified in the `requiremen
 
 ### 6. Run Gradio:
 
-How to run Gradio:
+How to run Web App:
 
-``python <replace-with-namefile>.py``
+``python frontend/app.py``
