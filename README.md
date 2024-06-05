@@ -60,10 +60,10 @@ source virtualenv_name/bin/activate.bat
 Replace `virtualenv_name` with the name you provided in the previous step.
 
 ### 5. Install Requirements
-Once the virtual environment is activated, you can install the project requirements from the `requirements.txt` file. Follow these steps:
+Once the virtual environment is activated, you can install the project requirements from the `requirements.app.txt` file. Follow these steps:
 
 **On Windows, macOS, and Linux:**
-In the activated virtual environment, navigate to the directory where the `requirements.txt` file is located. Then, enter the following command:
+In the activated virtual environment, navigate to the directory where the `requirements.app.txt` file is located. Then, enter the following command:
 ```bash
 pip install -r requirements.app.txt
 ```
