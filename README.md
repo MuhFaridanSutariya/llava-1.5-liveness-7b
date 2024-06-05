@@ -69,7 +69,7 @@ pip install -r requirements.app.txt
 ```
 This command will install all the required packages specified in the `requirements.app.txt` file 
 
-### 6. Run Gradio:
+### 6. Run Gradio
 
 How to run Web App:
 
