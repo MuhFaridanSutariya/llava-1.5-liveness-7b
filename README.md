@@ -68,3 +68,9 @@ In the activated virtual environment, navigate to the directory where the `requi
 pip install -r requirements.app.txt
 ```
 This command will install all the required packages specified in the `requirements.app.txt` file 
+
+### 6. Run Gradio:
+
+How to run Gradio:
+
+``python <replace-with-namefile>.py``
