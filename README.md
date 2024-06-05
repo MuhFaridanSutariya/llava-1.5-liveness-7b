@@ -1,7 +1,7 @@
 # Llava-1.5-Liveness-7b : A Vision Language Model for Liveness Detection
 
-- Team Leader: Firqa Aqila Noor Arasyi
-- Team Member: Muhammad Hasnan Ramadhan, Muhammad Faridan Sutariya and Rasyidan Akbar Fayrussani
+- Team Leader: <b>Firqa Aqila Noor Arasyi</b>
+- Team Member: <b>Muhammad Hasnan Ramadhan, Muhammad Faridan Sutariya and Rasyidan Akbar Fayrussani</b>
 
 ## How to run
 
