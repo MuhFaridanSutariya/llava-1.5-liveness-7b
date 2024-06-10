@@ -7,6 +7,15 @@
 
 ![Statistics (1)](https://github.com/MuhFaridanSutariya/llava-1.5-liveness-7b/assets/88027268/15e0eccb-46a1-451a-8655-41a78769da50)
 
+
+## Hardware Requirements for Efficient Model Inference
+
+### RAM Requirements:
+- **Minimum 32GB of RAM:** Provides sufficient memory to handle the large datasets and model parameters during inference, ensuring smooth and efficient data processing.
+
+### VRAM Requirements:
+- **Minimum 24GB of VRAM:** Ensures the GPU can effectively manage the high computational and memory demands of the model, facilitating faster and more efficient inference operations.
+
 ## How to run
 
 ### 1. Clone this repository
@@ -78,14 +87,6 @@ This command will install all the required packages specified in the `requiremen
 How to run Web App:
 
 ``python frontend/app.py``
-
-## Hardware Requirements for Efficient Model Inference
-
-### RAM Requirements:
-- **Minimum 32GB of RAM:** Provides sufficient memory to handle the large datasets and model parameters during inference, ensuring smooth and efficient data processing.
-
-### VRAM Requirements:
-- **Minimum 24GB of VRAM:** Ensures the GPU can effectively manage the high computational and memory demands of the model, facilitating faster and more efficient inference operations.
 
 ## Reference
 
