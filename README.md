@@ -3,6 +3,14 @@
 - Team Leader: <b>[Firqa Aqila Noor Arasyi](https://github.com/firqaaa)</b>
 - Team Member: <b>[Muhammad Hasnan Ramadhan](https://github.com/hasnanmr), [Muhammad Faridan Sutariya](https://github.com/MuhFaridanSutariya) and [Rasyidan Akbar Fayrussani](https://github.com/0xrsydn)</b>
 
+## Requirements Computation
+
+### RAM Requirements:
+- **Minimum 32GB of RAM:** Provides sufficient memory to handle the large datasets and model parameters during inference, ensuring smooth and efficient data processing.
+
+### VRAM Requirements:
+- **Minimum 24GB of VRAM:** Ensures the GPU can effectively manage the high computational and memory demands of the model, facilitating faster and more efficient inference operations.
+
 ## How to run
 
 ### 1. Clone this repository
