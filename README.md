@@ -5,7 +5,7 @@
 
 ## Vision Language Model Workflow for User Registration and Inference
 
-![Statistics](https://github.com/MuhFaridanSutariya/llava-1.5-liveness-7b/assets/88027268/2fa08090-9be5-451e-a4dd-b7a8d9c5ccb1)
+![Statistics (1)](https://github.com/MuhFaridanSutariya/llava-1.5-liveness-7b/assets/88027268/15e0eccb-46a1-451a-8655-41a78769da50)
 
 ## How to run
 
