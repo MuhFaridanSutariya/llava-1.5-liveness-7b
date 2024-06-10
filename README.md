@@ -92,4 +92,5 @@ How to run Web App:
 
 - [Blog Tutorial Finetuning Vision Language Model](https://huggingface.co/blog/vlms) 
 - [Base Vision Language Model](https://huggingface.co/llava-hf/llava-1.5-7b-hf)
+- [Paper Vision Language Model](https://arxiv.org/abs/2304.08485)
 
