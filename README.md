@@ -3,6 +3,10 @@
 - Team Leader: <b>[Firqa Aqila Noor Arasyi](https://github.com/firqaaa)</b>
 - Team Member: <b>[Muhammad Hasnan Ramadhan](https://github.com/hasnanmr), [Muhammad Faridan Sutariya](https://github.com/MuhFaridanSutariya) and [Rasyidan Akbar Fayrussani](https://github.com/0xrsydn)</b>
 
+## Vision Language Model Workflow for User Registration and Inference
+
+![Statistics](https://github.com/MuhFaridanSutariya/llava-1.5-liveness-7b/assets/88027268/2fa08090-9be5-451e-a4dd-b7a8d9c5ccb1)
+
 ## How to run
 
 ### 1. Clone this repository
