@@ -86,3 +86,9 @@ How to run Web App:
 
 ### VRAM Requirements:
 - **Minimum 24GB of VRAM:** Ensures the GPU can effectively manage the high computational and memory demands of the model, facilitating faster and more efficient inference operations.
+
+## Reference
+
+- https://huggingface.co/blog/vlms
+- https://huggingface.co/llava-hf/llava-1.5-7b-hf
+
