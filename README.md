@@ -90,6 +90,6 @@ How to run Web App:
 
 ## Reference
 
-- https://huggingface.co/blog/vlms
-- https://huggingface.co/llava-hf/llava-1.5-7b-hf
+- [Blog Tutorial Finetuning Vision Language Model](https://huggingface.co/blog/vlms) 
+- [Base Vision Language Model](https://huggingface.co/llava-hf/llava-1.5-7b-hf)
 
