@@ -75,7 +75,7 @@ How to run Web App:
 
 ``python frontend/app.py``
 
-## Requirements Computation
+## Hardware Requirements for Efficient Model Inference
 
 ### RAM Requirements:
 - **Minimum 32GB of RAM:** Provides sufficient memory to handle the large datasets and model parameters during inference, ensuring smooth and efficient data processing.
